@@ -13,7 +13,10 @@ public struct MockResponse {
     /// Custom headers to add to the mocked response.
     let headers: [String: String]
     
-    public init(statusCode: SupportedStatusCode, httpVersion: RequestMethod, data: Data?, headers: [String: String]) {
+    public init(statusCode: SupportedStatusCode,
+                httpVersion: RequestMethod,
+                data: Data?,
+                headers: [String: String]) {
         self.statusCode = statusCode
         self.httpVersion = httpVersion
         self.data = data

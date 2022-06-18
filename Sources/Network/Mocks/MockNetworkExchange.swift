@@ -6,34 +6,37 @@ enum MockNetworkExchangeError: Error {
 
 /// The supported `HTTP` status codes to test for.
 public enum SupportedStatusCode: Int {
-  /// `OK`.
-  case code200 = 200
-
-  /// `Not Found`.
-  case code404 = 404
+    /// `OK`.
+    case code200 = 200
+    
+    /// `Not Found`.
+    case code404 = 404
 }
 
 public struct MockNetworkExchange {
     /// The `URLRequest` associated to the request.
-    let urlRequest: URLRequest
+    var urlRequest: URLRequest!
     
     /// The mocked response inside of the exchange.
-    let response: MockResponse
+    var response: MockResponse!
     
     /// The expected `HTTPURLResponse`.
     var urlResponse: HTTPURLResponse {
         HTTPURLResponse(
-            url: urlRequest.url!,
-            statusCode: response.statusCode.rawValue,
-            httpVersion: response.httpVersion.rawValue,
-            // Merges existing headers, if any, with the custom mock headers favoring the latter.
-            headerFields: (urlRequest.allHTTPHeaderFields ?? [:]).merging(response.headers) { $1 }
+            url: urlRequest!.url!,
+            statusCode: response!.statusCode.rawValue,
+            httpVersion: response!.httpVersion.rawValue,
+            headerFields: (urlRequest?.allHTTPHeaderFields ?? [:]).merging(response!.headers) { $1 }
         )!
     }
     
-    public init(urlRequest: URLRequest, response: MockResponse) {
-        self.urlRequest = urlRequest
-        self.response = response
+    public init(endpoint: Endpoint, statusCode: SupportedStatusCode) {
+        self.urlRequest = URLRequest(url: endpoint.constructor()!)
+        self.response = MockResponse(statusCode: statusCode,
+                                     httpVersion: endpoint.method,
+                                     data: endpoint.toData(bundle: Bundle.main),
+                                     headers: endpoint.headers!
+        )
     }
 }
 
