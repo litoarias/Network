@@ -30,6 +30,7 @@ public protocol Endpoint {
     var headers: [String: String]? { get }
     var body: [String: String]? { get }
     var method: RequestMethod { get }
+    var mockName: String { get }
     
     func constructor() -> URL?
 }

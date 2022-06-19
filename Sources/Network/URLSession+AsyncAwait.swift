@@ -23,7 +23,6 @@ extension URLSession {
                 
                 continuation.resume(returning: (data, response))
             }
-            
             task.resume()
         }
     }

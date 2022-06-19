@@ -20,6 +20,8 @@ public struct MockNetworkExchange {
     /// The mocked response inside of the exchange.
     var response: MockResponse!
     
+    var bundle: Bundle!
+    
     /// The expected `HTTPURLResponse`.
     var urlResponse: HTTPURLResponse {
         HTTPURLResponse(
@@ -30,11 +32,11 @@ public struct MockNetworkExchange {
         )!
     }
     
-    public init(endpoint: Endpoint, statusCode: SupportedStatusCode) {
+    public init(bundle: Bundle, endpoint: Endpoint, statusCode: SupportedStatusCode) {
         self.urlRequest = URLRequest(url: endpoint.constructor()!)
         self.response = MockResponse(statusCode: statusCode,
                                      httpVersion: endpoint.method,
-                                     data: endpoint.toData(bundle: Bundle.main),
+                                     data: endpoint.toData(bundle: bundle),
                                      headers: endpoint.headers!
         )
     }

@@ -11,7 +11,6 @@ public extension HTTPClient {
     var session: URLSession {
         URLSession.shared
     }
-
     
     /// Returns a generic Result response as an `async` way, can be returns a
     /// `RequestError`.
