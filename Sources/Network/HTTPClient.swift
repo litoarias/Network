@@ -1,12 +1,10 @@
 import Foundation
 
-@available(iOS 13.0.0, *)
 public protocol HTTPClient {
-    var session: URLSession { get }
+    var session: URLSession { get set }
     func request<E: Endpoint, C: Codable>(endpoint: E, responseModel: C.Type) async -> Result<C, RequestError>
 }
 
-@available(iOS 13.0.0, *)
 public extension HTTPClient {
     var session: URLSession {
         URLSession.shared
